@@ -161,8 +161,8 @@ defmodule Timex.Ecto.DateTime do
     load({date, {h, m, s, usec}}) |> elem(1)
   end
 
-  def equal?(_, _) do
-    true
+  def equal?(t1, t2) do
+    t1 == t2
   end
 end
 
