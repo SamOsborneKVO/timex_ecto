@@ -124,6 +124,12 @@ defmodule Timex.Ecto.DateTime do
     }
     {:ok, dt}
   end
+
+  def load(%NaiveDateTime{} = datetime) do
+    DateTime.from_naive!(datetime, "Etc/UTC")
+    |> Timex.format("%G-W%V", :strftime)
+  end
+
   def load(_), do: :error
 
   @doc """
