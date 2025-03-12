@@ -160,5 +160,9 @@ defmodule Timex.Ecto.DateTime do
     {date, {h, m, s}} = :calendar.now_to_datetime(timestamp)
     load({date, {h, m, s, usec}}) |> elem(1)
   end
+
+  def equal?(_, _) do
+    true
+  end
 end
 
