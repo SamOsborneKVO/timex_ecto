@@ -89,10 +89,7 @@ defmodule Timex.Ecto.DateTime do
   def cast(input) do
     case Timex.to_datetime(input) do
       {:error, _} ->
-        case Ecto.DateTime.cast(input) do
-          {:ok, d} -> load({{d.year, d.month, d.day}, {d.hour, d.min, d.sec, d.usec}})
-          :error -> :error
-        end
+        :error
       %DateTime{} = d ->
         {:ok, d}
     end
