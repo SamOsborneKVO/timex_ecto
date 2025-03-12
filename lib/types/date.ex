@@ -27,10 +27,7 @@ defmodule Timex.Ecto.Date do
   def cast(datetime) do
     case Timex.to_date(datetime) do
       {:error, _} ->
-        case Ecto.Date.cast(datetime) do
-          {:ok, date} -> load({date.year, date.month, date.day})
-          :error -> :error
-        end
+        :error
       %Date{} = d -> {:ok, d}
     end
   end
