@@ -126,7 +126,7 @@ defmodule Timex.Ecto.DateTime do
   end
 
   def load(%NaiveDateTime{} = datetime) do
-    DateTime.from_naive!(datetime, "Etc/UTC")
+    {:ok, DateTime.from_naive!(datetime, "Etc/UTC")}
   end
 
   def load(_), do: :error
