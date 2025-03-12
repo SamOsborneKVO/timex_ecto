@@ -19,7 +19,7 @@ defmodule Timex.Ecto.Date do
     {:ok, date}
   end
   def cast(date) when is_binary(date) do
-    case Ecto.Date.cast(date) do
+    case Date.from_iso8601(date) do
       {:ok, d} -> load({d.year,d.month,d.day})
       :error -> :error
     end
@@ -52,7 +52,6 @@ defmodule Timex.Ecto.Date do
       {:ok, ~D[2017-02-01]}
   """
   def load({_year, _month, _day} = date), do: {:ok, Timex.to_date(date)}
-  def load(%Ecto.Date{} = date), do: {:ok, Ecto.Date.to_erl(date) |> Timex.to_date}
   def load(_), do: :error
 
   @doc """
