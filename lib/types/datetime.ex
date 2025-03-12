@@ -134,7 +134,7 @@ defmodule Timex.Ecto.DateTime do
       %DateTime{} = dt ->
         case Timex.to_naive_datetime(dt) do
           %NaiveDateTime{} = n ->
-            n
+            {:ok, n}
           {:error, _} -> :error
         end
       {:error, _} -> :error
@@ -144,7 +144,7 @@ defmodule Timex.Ecto.DateTime do
     case Timex.to_naive_datetime(datetime) do
       {:error, _} -> :error
       %NaiveDateTime{} = n ->
-        n
+        {:ok, n}
     end
   end
 
