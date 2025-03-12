@@ -134,8 +134,7 @@ defmodule Timex.Ecto.DateTime do
       %DateTime{} = dt ->
         case Timex.to_naive_datetime(dt) do
           %NaiveDateTime{} = n ->
-            {us, _} = n.microsecond
-            {:ok, {{n.year, n.month, n.day}, {n.hour, n.minute, n.second, us}}}
+            n
           {:error, _} -> :error
         end
       {:error, _} -> :error
@@ -145,8 +144,7 @@ defmodule Timex.Ecto.DateTime do
     case Timex.to_naive_datetime(datetime) do
       {:error, _} -> :error
       %NaiveDateTime{} = n ->
-        {us, _} = n.microsecond
-        {:ok, {{n.year, n.month, n.day}, {n.hour, n.minute, n.second, us}}}
+        n
     end
   end
 
