@@ -1,16 +1,10 @@
 defmodule Timex.Ecto.Date do
-  @moduledoc """
-  Support for using Timex with :date fields
-  """
   use Timex
 
   @behaviour Ecto.Type
 
   def type, do: :date
 
-  @doc """
-  Handle casting to Timex.Ecto.Date
-  """
   def cast(%Date{} = date), do: {:ok, date}
   # Support embeds_one/embeds_many
   def cast(%{"calendar" => _,
@@ -32,26 +26,12 @@ defmodule Timex.Ecto.Date do
     end
   end
 
-  @doc """
-  Creates a Timex.Date from from a passed in date.
-
-  Returns `{:ok, Timex.Date}` when successful.
-
-  Returns `:error` if the type passed in is either not an erl date nor Ecto.Date
-
-  ## Examples
-     Using an Ecto.Date:
-
-      iex> Ecto.Date.from_erl({2017, 2, 1})
-      ...> |> Timex.Ecto.Date.load
-      {:ok, ~D[2017-02-01]}
-
-    Using an erl date:
-
-      iex> Timex.Ecto.Date.load({2017, 2, 1})
-      {:ok, ~D[2017-02-01]}
-  """
   def load({_year, _month, _day} = date), do: {:ok, Timex.to_date(date)}
+
+  def load(%Date{} = date) do
+    {:ok, date}
+  end
+
   def load(_), do: :error
 
   @doc """
@@ -70,10 +50,17 @@ defmodule Timex.Ecto.Date do
       {_,_,_} = d   -> {:ok, d}
     end
   end
+  def dump(%Date{} = date) do
+    {:ok, date.year, date,month, date.day}
+  end
 
   def autogenerate(precision \\ :sec)
   def autogenerate(_) do
     {date, {_, _, _}} = :erlang.universaltime
     load(date) |> elem(1)
+  end
+
+  def equal?(term1, term2) do
+    term1 == term2
   end
 end
