@@ -6,7 +6,7 @@ defmodule Timex.Ecto.DateTime do
 
   @behaviour Ecto.Type
 
-  def type, do: :utc_datetime
+  def type, do: :naive_datetime
 
   @doc """
   Handle casting to Timex.Ecto.DateTime
