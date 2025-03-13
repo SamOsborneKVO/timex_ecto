@@ -39,19 +39,19 @@ defmodule Timex.Ecto.Date do
   """
   def dump(%DateTime{} = datetime) do
     case Timex.Timezone.convert(datetime, "Etc/UTC") do
-      %DateTime{year: y, month: m, day: d} -> {:ok, {y,m,d}}
+      %DateTime{year: y, month: m, day: d} -> Date.from_erl({y, m, d})
       {:error, _} -> :error
     end
   end
   def dump(datetime) do
     case Timex.to_erl(datetime) do
       {:error, _}   -> :error
-      {{_,_,_}=d,_} -> {:ok, d}
-      {_,_,_} = d   -> {:ok, d}
+      {{y,m,d}=d,_} -> Date.from_erl({y, m, d})
+      {y,m,d} = d   -> Date.from_erl({y, m, d})
     end
   end
   def dump(%Date{} = date) do
-    {:ok, date.year, date,month, date.day}
+    {:ok, date}
   end
 
   def autogenerate(precision \\ :sec)
