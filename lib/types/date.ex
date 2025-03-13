@@ -43,15 +43,18 @@ defmodule Timex.Ecto.Date do
       {:error, _} -> :error
     end
   end
+  def dump(%Date{} = date) do
+    {:ok, date}
+  end
+  def dump({y, m, d}) do
+    Date.from_erl({y, m, d})
+  end
   def dump(datetime) do
     case Timex.to_erl(datetime) do
       {:error, _}   -> :error
       {{y,m,d}=d,_} -> Date.from_erl({y, m, d})
       {y,m,d} = d   -> Date.from_erl({y, m, d})
     end
-  end
-  def dump(%Date{} = date) do
-    {:ok, date}
   end
 
   def autogenerate(precision \\ :sec)
