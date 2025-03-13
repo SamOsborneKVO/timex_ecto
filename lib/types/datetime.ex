@@ -137,12 +137,20 @@ defmodule Timex.Ecto.DateTime do
   def dump(%DateTime{} = datetime) do
     case Timex.Timezone.convert(datetime, "Etc/UTC") do
       %DateTime{} = dt ->
-        {:ok, dt}
+        case Timex.to_naive_datetime(dt) do
+           %NaiveDateTime{} = n ->
+             {:ok, n}
+           {:error, _} -> :error
+         end
       {:error, _} -> :error
     end
   end
   def dump(datetime) do
-    :error
+    case Timex.to_naive_datetime(datetime) do
+           %NaiveDateTime{} = n ->
+             {:ok, n}
+           {:error, _} -> :error
+         end
   end
 
   def autogenerate(precision \\ :sec)
