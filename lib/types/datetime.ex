@@ -137,7 +137,7 @@ defmodule Timex.Ecto.DateTime do
   def dump(%DateTime{} = datetime) do
     case Timex.Timezone.convert(datetime, "Etc/UTC") do
       %DateTime{} = dt ->
-        dt
+        {:ok, dt}
       {:error, _} -> :error
     end
   end
