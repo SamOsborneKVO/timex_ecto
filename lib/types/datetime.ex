@@ -121,7 +121,7 @@ defmodule Timex.Ecto.DateTime do
       :utc_offset => 0,
       :std_offset => 0
     }
-    {:ok, dt}
+    {:ok, dt |> DateTime.truncate(:second)}
   end
 
   def load(%NaiveDateTime{} = datetime) do
