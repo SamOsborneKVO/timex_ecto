@@ -116,16 +116,17 @@ defmodule Timex.Ecto.DateTime do
       :hour => h,
       :minute => mm,
       :second => s,
+      :microsecond => Timex.DateTime.Helpers.construct_microseconds({usec, -1}),
       :time_zone => "Etc/UTC",
       :zone_abbr => "UTC",
       :utc_offset => 0,
       :std_offset => 0
     }
-    {:ok, dt |> DateTime.truncate(:second)}
+    {:ok, dt}
   end
 
   def load(%NaiveDateTime{} = datetime) do
-    {:ok, DateTime.from_naive!(datetime, "Etc/UTC") |> DateTime.truncate(:second)}
+    {:ok, DateTime.from_naive!(datetime, "Etc/UTC")}
   end
 
   def load(_), do: :error
