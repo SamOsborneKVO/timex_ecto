@@ -15,7 +15,7 @@ defmodule Timex.Ecto.Date do
   def cast(date) when is_binary(date) do
     if String.contains?(date, "T") do
       case DateTime.from_iso8601(date) do
-        {:ok, d, _} -> Timex.to_date(d)
+        {:ok, d, _} -> load({d.year,d.month,d.day})
         :error -> :error
       end
     else
