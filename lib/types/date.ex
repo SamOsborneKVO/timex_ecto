@@ -13,9 +13,16 @@ defmodule Timex.Ecto.Date do
     {:ok, date}
   end
   def cast(date) when is_binary(date) do
-    case Date.from_iso8601(date) do
-      {:ok, d} -> load({d.year,d.month,d.day})
-      :error -> :error
+    if String.contains?(date, "T") do
+      case DateTime.from_iso8601(date) do
+        {:ok, d, _} -> Timex.to_date(d)
+        :error -> :error
+      end
+    else
+      case Date.from_iso8601(date) do
+        {:ok, d} -> load({d.year,d.month,d.day})
+        :error -> :error
+      end
     end
   end
   def cast(datetime) do
